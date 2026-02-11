@@ -1,6 +1,6 @@
 # Statement Reader
 
-Statement Reader is a web application built with Django that allows users to view their credit card statements, visualize their financial history, and browse other available credit cards.
+Statement Reader is a web application built with Django that allows users to view their credit card statements and visualize their financial history.
 
 ## Installation & Setup
 
