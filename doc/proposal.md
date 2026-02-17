@@ -1,11 +1,11 @@
-## Product Vision
+### Product Vision
 This product is for a financially conscious person who wants a convenient and simple solution to track and view 
 transactions. The Statement_Reader is a financial tracking tool that organizes spending statements into one
 easily understood document. Unlike EveryDollar, which requires manual entry of every transaction, our 
 Statement Reader will input an entire month's transactions with the upload of a PDF statement.
 
 
-# Proposal
+## Proposal
 In today's world, many people struggle to keep track of their finances and understand where their money is going.
 With the rise of online banking and digital transactions, it has become increasingly difficult for individuals to 
 manage their finances effectively. The Statement Reader aims to solve this problem by providing a simple and convenient
