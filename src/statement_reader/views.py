@@ -1,8 +1,12 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.template import loader
 
 # Create your views here.
 def transactions_input(request):
-    return render(request,'transactions_input.html')
+    template = loader.get_template("statement_reader/transactions_input.html")
+    return HttpResponse(template.render())
 
 def transactions_list(request):
-    return render(request,'transactions_list.html')
+    template = loader.get_template("statement_reader/transactions_list.html")
+    return HttpResponse(template.render())
