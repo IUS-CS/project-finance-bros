@@ -27,4 +27,4 @@ jobs:
         pip install -r src/requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        python src/manage.py test
