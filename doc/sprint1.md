@@ -7,7 +7,7 @@ Members present:
 * Jeremiah Anderson
 * Nolan Lowhorn
 * Ty Sandman
-* Aaron O'Brien
+* Aaron Miskuf
 
 ## Demo
 
