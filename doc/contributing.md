@@ -1,0 +1,2 @@
+# Contributing
+Our group will not be using AI for this project. The reviewer will pull the branch on their own machine in order to test them before merging. Nolan - PyCharm. Jeremiah - VSCode. Ty - Cosmic Text Editor. Aaron - PyCharm, XCode.
