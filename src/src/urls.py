@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path("statement_reader/", include("statement_reader.urls")),
+    path("transactions_input", include("statement_reader.urls")),
     path('admin/', admin.site.urls),
+    path("", include("statement_reader.urls")),
+    path("statement_reader", include("statement_reader.urls")),
+    path("reader", include("statement_reader.urls")),
 ]
