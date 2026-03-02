@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from .models import Transaction
+from .forms import TransactionForm
 
 # Create your views here.
 def home(request):
@@ -9,8 +10,14 @@ def home(request):
     return HttpResponse(template.render())
 
 def transactions_input(request):
-    template = loader.get_template("statement_reader/transactions_input.html")
-    return HttpResponse(template.render())
+    if request.method == 'POST':
+        form = TransactionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(transactions_list)
+    else:
+        form = TransactionForm()
+    return render(request, 'statement_reader/transactions_input.html', {'form':form})
 
 def transactions_list(request):
     transactions = Transaction.objects.all().values()
