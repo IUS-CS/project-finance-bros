@@ -30,7 +30,7 @@ Here are screenshots of what we did:
 
 ### Good
 
-* Exception collaboration
+* Exceptional collaboration
 * Each group member independantly learned how to use the technology
 
 ### Bad
