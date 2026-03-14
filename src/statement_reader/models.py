@@ -9,3 +9,6 @@ class Transaction(models.Model):
     vendor_name = models.CharField(max_length=30)
     date = models.DateField(default=date.today)
     amount = models.DecimalField(max_digits=7, decimal_places=2)
+
+class PDFUpload(models.Model):
+    file = models.FileField(upload_to="src/statement_reader")
