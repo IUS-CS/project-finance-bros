@@ -34,3 +34,13 @@ class TransactionEditFormTest(TestCase):
                                               'amount': '42.00'})
         self.transaction.refresh_from_db()
         self.assertEqual(self.transaction.vendor_name, "Thorntons")
+
+class TransactionDeleteItemTest(TestCase):
+    def setUp(self):
+        Transaction.objects.create(vendor_name = "Walmart", date = datetime.date.today(), amount = 20.00)
+        Transaction.objects.create(vendor_name = "Best Buy", date = datetime.date.today(), amount = 60.00)
+        self.url = reverse("transaction_delete_item", kwargs={'pk': 1})
+
+    def test_transaction_delete_item_from_database(self):
+        response = self.client.get(self.url)
+        self.assertEqual(Transaction.objects.count(), 1)
