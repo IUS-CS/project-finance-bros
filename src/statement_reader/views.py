@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
+from django.urls import reverse
 from .models import Transaction
 from .forms import TransactionForm
 
@@ -31,6 +32,11 @@ def transactions_edit_form(request, pk):
         form = TransactionForm(instance=object)
 
     return render(request, "statement_reader/transactions_input.html", {'form': form})
+
+def transactions_delete_item(request, pk):
+    transaction = Transaction.objects.get(pk=pk)
+    transaction.delete()
+    return HttpResponseRedirect(reverse('transactions_list'))
 
 def transactions_list(request):
     transactions = Transaction.objects.all()

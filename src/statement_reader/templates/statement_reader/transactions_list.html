@@ -15,6 +15,9 @@
           <a href="{% url 'transaction_edit_form' x.pk %}">
             Edit Item
           </a>
+          <a href="{% url 'transaction_delete_item' x.pk %}">
+            Delete Item
+          </a>
         </li>
 
     {% endfor %}
