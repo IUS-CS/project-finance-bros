@@ -8,7 +8,18 @@
 
   <ul>
     {% for x in transactions %}
-        <li>{{ x.vendor_name }} ${{ x.amount }} {{ x.date }} </li>
+        <li>
+          {{ x.vendor_name }}
+          ${{ x.amount }}
+          {{ x.date }}
+          <a href="{% url 'transaction_edit_form' x.pk %}">
+            Edit Item
+          </a>
+          <a href="{% url 'transaction_delete_item' x.pk %}">
+            Delete Item
+          </a>
+        </li>
+
     {% endfor %}
   </ul>
 
