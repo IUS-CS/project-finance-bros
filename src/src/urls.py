@@ -16,9 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
+from statement_reader import views
 
 urlpatterns = [
     path("statement_reader/", include("statement_reader.urls")),
     path('admin/', admin.site.urls),
     path("", include("statement_reader.urls")),
+    path("reader/", views.upload_file, name="uploaded_file"),
 ]
