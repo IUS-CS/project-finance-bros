@@ -6,5 +6,5 @@ class TransactionForm(forms.ModelForm):
         model = Transaction
         fields = ['vendor_name', 'date', 'amount']
 
-class UploadPDF(forms.Form):
+class UploadPDF(forms.Form): 
     file = forms.FileField()
