@@ -20,8 +20,9 @@ This sprint, we completed:
 
 Here are screenshots of what we did:
 
-![Thing](/doc/images/transaction_input_page.png?raw=true)
-![Thing](/doc/images/transaction_list_page.png?raw=true)
+![Thing](/doc/images/transaction_list_with_edit_and_delete.png?raw=true)
+![Thing](/doc/images/pdf_upload.png?raw=true)
+![Thing](/doc/images/pdf_view.png?raw=true)
 
 ## Retro
 
