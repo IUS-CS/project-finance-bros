@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from .models import Transaction
+from .models import PDFUpload
 from .forms import TransactionForm
 from .forms import UploadPDF
 from .handle_uploads import handle_uploaded_file
+import os
 
 # Create your views here.
 def home(request):
@@ -65,3 +67,11 @@ def upload_file(request):
     else:
         form = UploadPDF()
     return render(request, "statement_reader/reader.html", {"form": form})
+    
+def pdf_list(request):
+    pdfs = PDFUpload.objects.all()
+    template = loader.get_template("statement_reader/pdf.html")
+    context = {
+        'pdfs' : pdfs
+    }
+    return render(request, 'statement_reader/pdf.html', {'pdfs' : pdfs})

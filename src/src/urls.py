@@ -25,4 +25,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("statement_reader.urls")),
     path("reader/", views.upload_file, name="uploaded_file"),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
