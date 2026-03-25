@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <a href="http://localhost:8000"><- Home</a>
+    <h1 style="text-align: center;">Statement Reader</h1>
+<head>
+    <title>Uploaded Files</title>
+</head>
+<body>
+    <h1>Uploaded Files</h1>
+    <ul>
+        {% for pdf in pdfs %}
+            <li>
+                <strong>{{ pdf.file }}</strong> - 
+                <a href="{{ pdf.file.url }}" target="_blank">View File</a>
+            </li>
+        {% empty %}
+            <li>No files uploaded yet.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
