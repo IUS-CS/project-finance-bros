@@ -49,5 +49,6 @@ Here are screenshots of what we did:
 Points | Story
 -------|--------
 3      | As a user, I want to have my pdfs parsed into transactions
+3      | As a user, I want the delete stored pdfs
 3      | As a user, I want the website to look good
 8      | As a maintainer, I want to add unit and system tests
