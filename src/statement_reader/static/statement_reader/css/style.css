@@ -1,0 +1,11 @@
+body {
+    background-image: url("/static/statement_reader/images/background.jpeg");
+    background-size: cover;
+
+}
+
+h1 {
+    text-align: center;
+}
+
+

@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-
-<!--<p style="text-align: center;">Finance Bros</p>-->
-
-<h1 style="text-align: center;">Finance Tracker</h1>
+{% load static %}
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'statement_reader/css/style.css' %}">
+</head>
+<body>
+    <h1 style="text-align: center;">Finance Tracker</h1>
 <div style="text-align: center;">
     <a href="/input">
         <button style="text-align: center;">Manual Transaction Entry</button>
@@ -16,4 +20,5 @@
         <button style="text-align: center;">Saved Transactions</button>
     </a>
 </div>
-
+</body>
+</html>
