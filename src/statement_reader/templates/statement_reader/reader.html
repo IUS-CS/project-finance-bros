@@ -1,14 +1,28 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statement Reader</title>
+    <link rel="stylesheet" href="{% static 'statement_reader/css/style.css' %}">
+</head>
 <body>
     <a href="http://localhost:8000"><- Home</a>
-    <h1 style="text-align: center;">Statement Reader</h1>
+
+<div style="text-align: center;">
+    <h1>Statement Reader</h1>
 
     <form method="post" enctype="multipart/form-data" action="/reader/">
         {% csrf_token %}
         <input type="file" name="file" accept=".pdf">
         <button type="submit">Submit statement PDF</button>
     </form>
-    <a href="http://localhost:8000/pdf"><- View list of uploaded files</a>
+    <br>
+    <br>
+    <a href="http://localhost:8000/pdf">
+        <button style="text-align: center;">View list of uploaded files</button>
+    </a>
+</div>
 </body>
 </html>
