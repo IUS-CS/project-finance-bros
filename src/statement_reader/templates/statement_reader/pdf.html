@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <a href="http://localhost:8000"><- Home</a>
-    <h1 style="text-align: center;">Statement Reader</h1>
 <head>
     <title>Uploaded Files</title>
 </head>
@@ -12,6 +11,11 @@
             <li>
                 <strong>{{ pdf.file }}</strong> - 
                 <a href="{{ pdf.file.url }}" target="_blank">View File</a>
+
+                <form method="post" action="{% url 'delete_pdf' pdf.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Delete File</button>
+                </form>
             </li>
         {% empty %}
             <li>No files uploaded yet.</li>
