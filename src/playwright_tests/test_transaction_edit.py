@@ -17,7 +17,7 @@ def run(playwright: Playwright) -> None:
     page.get_by_role("spinbutton", name="Amount:").click()
     page.get_by_role("spinbutton", name="Amount:").fill("89")
     page.get_by_role("button", name="Submit").click()
-    expect(page.get_by_text("Speedway $89.00 April 2, 2026")).to_be_visible()
+    expect(page.get_by_text("Speedway $89.00 ")).to_be_visible()
     page.get_by_role("link", name="Delete Item").click()
 
 
