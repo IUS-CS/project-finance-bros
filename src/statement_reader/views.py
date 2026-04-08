@@ -75,3 +75,8 @@ def pdf_list(request):
         'pdfs' : pdfs
     }
     return render(request, 'statement_reader/pdf.html', {'pdfs' : pdfs})
+
+def delete_pdf(request, pk):
+    pdf = PDFUpload.objects.get(pk=pk)
+    pdf.delete()
+    return HttpResponseRedirect(reverse('pdf_list'))

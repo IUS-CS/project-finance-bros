@@ -10,5 +10,6 @@ urlpatterns = [
     path("reader", views.reader),
     path("upload", views.upload_file),
     path ("edit/<int:pk>/", views.transactions_edit_form, name="transaction_edit_form"),
-    path ("delete/<int:pk>/", views.transactions_delete_item, name="transaction_delete_item")
+    path ("delete/<int:pk>/", views.transactions_delete_item, name="transaction_delete_item"),
+    path ("delete_pdf/<int:pk>/", views.delete_pdf, name="delete_pdf")
 ]
