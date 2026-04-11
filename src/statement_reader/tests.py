@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import Transaction, PDFUpload
+from unittest.mock import patch
 import datetime
 
 # Create your tests here.
@@ -124,7 +125,8 @@ class TransactionEditFailTest(TestCase):
 class PDFUploadInsertTest(TestCase):
     def test_pdfupload_post_saves_to_database(self):
         test_file = SimpleUploadedFile('statement.pdf', b'PDF', content_type='application/pdf')
-        response = self.client.post('/upload', {'file': test_file})
+        with patch("statement_reader.handle_uploads.parse"):
+            response = self.client.post('/upload', {'file': test_file})
         self.assertEqual(PDFUpload.objects.count(), 1)
 
 class PDFUploadInsertFailTest(TestCase):
