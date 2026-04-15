@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.forms import modelformset_factory
 from django.template import loader
 from django.urls import reverse
 from .models import Transaction
@@ -40,6 +41,7 @@ def transactions_edit_form(request, pk):
 
     return render(request, "statement_reader/transactions_input.html", {'form': form})
 
+
 def transactions_delete_item(request, pk):
     transaction = Transaction.objects.get(pk=pk)
     transaction.delete()
@@ -62,11 +64,26 @@ def upload_file(request):
     if request.method == "POST":
         form = UploadPDF(request.POST, request.FILES)
         if form.is_valid():
-            handle_uploaded_file(request.FILES["file"])
-            return HttpResponseRedirect("/")
+            selected_pks = handle_uploaded_file(request.FILES["file"])  
+            specific_transactions = Transaction.objects.filter(pk__in=selected_pks)
+
+            TransactionFormSet = modelformset_factory(Transaction, fields=('vendor_name', 'date', 'amount', 'category'), extra=0)
+            formset = TransactionFormSet(queryset=specific_transactions)
+            return render(request, 'statement_reader/transactions_category_edit.html', {'formset': formset})
+                
     else:
         form = UploadPDF()
     return render(request, "statement_reader/reader.html", {"form": form})
+
+def save_categories(request):
+    if request.method == 'POST': 
+        TransactionFormSet = modelformset_factory(Transaction, fields=('vendor_name', 'date', 'amount', 'category'), extra=0)
+        formset = TransactionFormSet(request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect(transactions_list)
+        print(formset.errors)
+    return redirect(transactions_list)
     
 def pdf_list(request):
     pdfs = PDFUpload.objects.all()
