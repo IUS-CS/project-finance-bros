@@ -64,9 +64,8 @@ def upload_file(request):
     if request.method == "POST":
         form = UploadPDF(request.POST, request.FILES)
         if form.is_valid():
-            selected_pks = handle_uploaded_file(request.FILES["file"])  
-            specific_transactions = Transaction.objects.filter(pk__in=selected_pks)
-
+            handle_uploaded_file(request.FILES["file"])  
+            specific_transactions = Transaction.objects.filter(category="OT")
             TransactionFormSet = modelformset_factory(Transaction, fields=('vendor_name', 'date', 'amount', 'category'), extra=0)
             formset = TransactionFormSet(queryset=specific_transactions)
             return render(request, 'statement_reader/transactions_category_edit.html', {'formset': formset})

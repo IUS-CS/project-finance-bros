@@ -4,4 +4,4 @@ from .parser import parse
 def handle_uploaded_file(uploaded_file):
     pdf_upload = PDFUpload(file=uploaded_file)
     pdf_upload.save()
-    return parse(pdf_upload)
+    parse(pdf_upload)
