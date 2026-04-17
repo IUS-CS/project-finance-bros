@@ -65,8 +65,8 @@ def upload_file(request):
         form = UploadPDF(request.POST, request.FILES)
         if form.is_valid():
             handle_uploaded_file(request.FILES["file"])  
-            specific_transactions = Transaction.objects.filter(category="OT")
-            TransactionFormSet = modelformset_factory(Transaction, fields=('vendor_name', 'date', 'amount', 'category'), extra=0)
+            specific_transactions = Transaction.objects.filter(category=None)
+            TransactionFormSet = modelformset_factory(Transaction, form=TransactionForm, extra=0)
             formset = TransactionFormSet(queryset=specific_transactions)
             return render(request, 'statement_reader/transactions_category_edit.html', {'formset': formset})
                 
@@ -79,9 +79,11 @@ def save_categories(request):
         TransactionFormSet = modelformset_factory(Transaction, fields=('vendor_name', 'date', 'amount', 'category'), extra=0)
         formset = TransactionFormSet(request.POST)
         if formset.is_valid():
-            formset.save()
-            return redirect(transactions_list)
-        print(formset.errors)
+            instances = formset.save()
+            for instance in instances:
+                if instance.category == None:
+                    instance.category = 'OT'
+                instance.save()
     return redirect(transactions_list)
     
 def pdf_list(request):
