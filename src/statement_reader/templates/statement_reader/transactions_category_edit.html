@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div>
+        <a href="http://localhost:8000"><- Home</a>
+        <h1 style="text-align: center;">Finance Tracker</h1>
+    </div>
+
+    <form action="/save_categories" method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+
+        {% for form in formset %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            {{ form.as_p }}
+        {% endfor %}
+        
+        <input type="submit" value="Submit"></input>
+    </form>
+
+</body>
+
+</html>

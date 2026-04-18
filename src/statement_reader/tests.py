@@ -51,7 +51,7 @@ class TransactionDeleteItemTest(TestCase):
 
 class TransactionInputViewFailTest(TestCase):
     def test_transaction_post_fails_with_too_many_characters_in_vendor(self):
-        response = self.client.post('/input', {'vendor_name': 'Speedway111111111111111111111111111111111111',
+        response = self.client.post('/input', {'vendor_name': 'Speedway1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111',
                                               'date': datetime.date.today(),
                                               'amount': '42.00',
 					      'category': 'GS'})
@@ -91,7 +91,7 @@ class TransactionEditFailTest(TestCase):
         self.url = reverse("transaction_edit_form", kwargs={'pk': self.transaction.pk})
 
     def test_transaction_edit_post_fails_with_too_many_characters_in_vendor(self):
-        response = self.client.post(self.url, data={'vendor_name': 'Thorntons111111111111111111111111111111',
+        response = self.client.post(self.url, data={'vendor_name': 'Thorntons11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111',
                                               'date': datetime.date.today(),
                                               'amount': '42.00',
 					      'category': 'GS'})

@@ -86,6 +86,7 @@ def parse(file):
        price = res.pop(0)
        list_of_transactions.append({"Name": name, "Price": price, "Date": date})
 
+
     for transaction in list_of_transactions:
         clean_transaction(transaction, year)
         
@@ -95,3 +96,5 @@ def parse(file):
         trans.date = transaction["Date"]
         trans.save()
         
+        
+    
