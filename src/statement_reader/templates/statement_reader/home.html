@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
+<html lang="en">
 <head>
+    <br>
+    <br>
     <title>Home</title>
     <link rel="stylesheet" href="{% static 'statement_reader/css/style.css' %}">
 </head>
+
 <body>
     <h1 style="text-align: center;">Finance Tracker</h1>
-<div style="text-align: center;">
-    <a href="/input">
-        <button style="text-align: center;">Manual Transaction Entry</button>
-    </a>
-    <br> <br>
-    <a href="/reader">
-        <button style="text-align: center;">Statement Reader</button>
-    </a>
-    <br> <br>
-    <a href="/list">
-        <button style="text-align: center;">Saved Transactions</button>
-    </a>
-</div>
+        <div class="button-home">
+            <a href="/reader"><button>Statement Reader</button></a>
+            <a href="/input"><button>Manual Transaction Entry</button></a>
+        </div>
+        <div class="button-home">
+            <a href="/list"><button>Saved Transactions</button></a>
+            <a href="/pdf"><button>Saved PDFs</button></a>
+        </div>
 </body>
 </html>

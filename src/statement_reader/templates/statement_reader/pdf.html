@@ -1,10 +1,16 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
-    <a href="http://localhost:8000"><- Home</a>
+<header>
+    <a href="http://localhost:8000"><img src="{% static 'statement_reader/images/home_button.png' %}" alt="home">
+    </a>
+    
+</header>
 <head>
     <title>Uploaded Files</title>
 </head>
 <body>
+    <link rel="stylesheet" href="{% static 'statement_reader/css/style.css' %}">
     <h1>Uploaded Files</h1>
     <ul>
         {% for pdf in pdfs %}

@@ -63,7 +63,7 @@ def upload_file(request):
         form = UploadPDF(request.POST, request.FILES)
         if form.is_valid():
             handle_uploaded_file(request.FILES["file"])
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("/pdf")
     else:
         form = UploadPDF()
     return render(request, "statement_reader/reader.html", {"form": form})
