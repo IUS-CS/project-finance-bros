@@ -1,4 +1,3 @@
-from PyPDF2 import PdfReader
 from .models import Transaction
 from datetime import datetime
 import pdfplumber
