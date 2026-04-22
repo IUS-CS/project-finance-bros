@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import Transaction, PDFUpload
+from unittest.mock import patch
 import datetime
 
 # Create your tests here.
@@ -14,7 +15,8 @@ class TransactionInputViewTest(TestCase):
     def test_transaction_post_saves_to_database(self):
         response = self.client.post('/input', {'vendor_name': 'Speedway',
                                               'date': datetime.date.today(),
-                                              'amount': '42.00'})
+                                              'amount': '42.00',
+					      'category': 'GS'})
         self.assertEqual(Transaction.objects.count(), 1)
 
 class TransactionEditFormTest(TestCase):
@@ -32,14 +34,15 @@ class TransactionEditFormTest(TestCase):
     def test_transaction_edit_post_saves_to_database(self):
         response = self.client.post(self.url, data={'vendor_name': 'Thorntons',
                                               'date': datetime.date.today(),
-                                              'amount': '42.00'})
+                                              'amount': '42.00',
+					      'category': 'GS'})
         self.transaction.refresh_from_db()
         self.assertEqual(self.transaction.vendor_name, "Thorntons")
 
 class TransactionDeleteItemTest(TestCase):
     def setUp(self):
-        Transaction.objects.create(vendor_name = "Walmart", date = datetime.date.today(), amount = 20.00)
-        Transaction.objects.create(vendor_name = "Best Buy", date = datetime.date.today(), amount = 60.00)
+        Transaction.objects.create(vendor_name = "Walmart", date = datetime.date.today(), amount = 20.00, category = "GR")
+        Transaction.objects.create(vendor_name = "Best Buy", date = datetime.date.today(), amount = 60.00, category = "GR")
         self.url = reverse("transaction_delete_item", kwargs={'pk': 1})
 
     def test_transaction_delete_item_from_database(self):
@@ -48,27 +51,31 @@ class TransactionDeleteItemTest(TestCase):
 
 class TransactionInputViewFailTest(TestCase):
     def test_transaction_post_fails_with_too_many_characters_in_vendor(self):
-        response = self.client.post('/input', {'vendor_name': 'Speedway111111111111111111111111111111111111',
+        response = self.client.post('/input', {'vendor_name': 'Speedway1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111',
                                               'date': datetime.date.today(),
-                                              'amount': '42.00'})
+                                              'amount': '42.00',
+					      'category': 'GS'})
         self.assertEqual(Transaction.objects.count(), 0)
 
     def test_transaction_post_fails_with_incorrect_date(self):
         response = self.client.post('/input', {'vendor_name': 'Speedway',
                                               'date': '3/25/asdfg2026',
-                                              'amount': '42.00'})
+                                              'amount': '42.00',
+					      'category': 'GS'})
         self.assertEqual(Transaction.objects.count(), 0)
 
     def test_transaction_post_fails_with_incorrect_amount(self):
         response = self.client.post('/input', {'vendor_name': 'Speedway',
                                               'date': datetime.date.today(),
-                                              'amount': '$42'})
+                                              'amount': '$42',
+					      'category': 'GS'})
         self.assertEqual(Transaction.objects.count(), 0)
 
     def test_transaction_post_fails_with_too_many_characters_in_amount(self):
         response = self.client.post('/input', {'vendor_name': 'Speedway',
                                               'date': datetime.date.today(),
-                                              'amount': '9999999999999999999999999999999999999999999.00'})
+                                              'amount': '9999999999999999999999999999999999999999999.00',
+					      'category': 'GS'})
         self.assertEqual(Transaction.objects.count(), 0)
 
     def test_transaction_post_fails_with_no_information(self):
@@ -84,37 +91,42 @@ class TransactionEditFailTest(TestCase):
         self.url = reverse("transaction_edit_form", kwargs={'pk': self.transaction.pk})
 
     def test_transaction_edit_post_fails_with_too_many_characters_in_vendor(self):
-        response = self.client.post(self.url, data={'vendor_name': 'Thorntons111111111111111111111111111111',
+        response = self.client.post(self.url, data={'vendor_name': 'Thorntons11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111',
                                               'date': datetime.date.today(),
-                                              'amount': '42.00'})
+                                              'amount': '42.00',
+					      'category': 'GS'})
         self.transaction.refresh_from_db()
         self.assertEqual(self.transaction.vendor_name, "Speedway")
 
     def test_transaction_edit_post_fails_with_incorrect_date(self):
         response = self.client.post(self.url, data={'vendor_name': 'Thorntons',
                                               'date': '4/2/a2026',
-                                              'amount': '42.00'})
+                                              'amount': '42.00',
+					      'category': 'GS'})
         self.transaction.refresh_from_db()
         self.assertEqual(self.transaction.vendor_name, "Speedway")
 
     def test_transaction_edit_post_fails_with_incorrect_amount(self):
         response = self.client.post(self.url, data={'vendor_name': 'Thorntons',
                                               'date': datetime.date.today(),
-                                              'amount': '$42.00'})
+                                              'amount': '$42.00',
+					      'category': 'GS'})
         self.transaction.refresh_from_db()
         self.assertEqual(self.transaction.vendor_name, "Speedway")
 
     def test_transaction_edit_post_fails_with_too_many_characters_in_amount(self):
         response = self.client.post(self.url, data={'vendor_name': 'Thorntons',
                                               'date': datetime.date.today(),
-                                              'amount': '9999999999999999999999999999999999999.00'})
+                                              'amount': '9999999999999999999999999999999999999.00',
+					      'category': 'GS'})
         self.transaction.refresh_from_db()
         self.assertEqual(self.transaction.vendor_name, "Speedway")
 
 class PDFUploadInsertTest(TestCase):
     def test_pdfupload_post_saves_to_database(self):
         test_file = SimpleUploadedFile('statement.pdf', b'PDF', content_type='application/pdf')
-        response = self.client.post('/upload', {'file': test_file})
+        with patch("statement_reader.handle_uploads.parse"):
+            response = self.client.post('/upload', {'file': test_file})
         self.assertEqual(PDFUpload.objects.count(), 1)
 
 class PDFUploadInsertFailTest(TestCase):
