@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
-
+<html lang="en">
+<header>
+    <a href="http://localhost:8000"><img src="{% static 'statement_reader/images/home_button.png' %}"
+                                         style="width:42px;height:42px;" alt="home">
+    </a>
+</header>
 <body>
   <link rel="stylesheet" href="{% static 'statement_reader/css/style.css' %}">
-    <a href="http://localhost:8000"><- Home</a>
-
   <h1>Transactions</h1>
 
   <ul>

@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+<header>
+    <a href="http://localhost:8000"><img src="{% static 'statement_reader/images/home_button.png' %}" alt="home">
+    </a>
+</header>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,20 +12,19 @@
     <link rel="stylesheet" href="{% static 'statement_reader/css/style.css' %}">
 </head>
 <body>
-    <a href="http://localhost:8000"><- Home</a>
-
 <div style="text-align: center;">
     <h1>Statement Reader</h1>
 
     <form method="post" enctype="multipart/form-data" action="/reader/">
         {% csrf_token %}
         <input type="file" name="file" accept=".pdf">
-        <button type="submit">Submit statement PDF</button>
+        <br><br>
+        <button type="submit" class="submit-button">Submit statement PDF</button>
     </form>
     <br>
     <br>
     <a href="http://localhost:8000/pdf">
-        <button style="text-align: center;">View list of uploaded files</button>
+        <button class="button-page">View list of uploaded files</button>
     </a>
 </div>
 </body>
