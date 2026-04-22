@@ -78,6 +78,13 @@ class TransactionInputViewFailTest(TestCase):
 					      'category': 'GS'})
         self.assertEqual(Transaction.objects.count(), 0)
 
+    def test_transaction_post_fails_with_incorrect_category(self):
+        response = self.client.post('/input', {'vendor_name': 'Speedway',
+                                              'date': datetime.date.today(),
+                                              'amount': '42.00',
+					      'category': 'GA'})
+        self.assertEqual(Transaction.objects.count(), 0)
+
     def test_transaction_post_fails_with_no_information(self):
         response = self.client.post('/input')
         self.assertEqual(Transaction.objects.count(), 0)
@@ -122,11 +129,32 @@ class TransactionEditFailTest(TestCase):
         self.transaction.refresh_from_db()
         self.assertEqual(self.transaction.vendor_name, "Speedway")
 
+    def test_transaction_edit_post_fails_with_incorrect_category(self):
+        response = self.client.post(self.url, data={'vendor_name': 'Thorntons',
+                                              'date': datetime.date.today(),
+                                              'amount': '42.00',
+					      'category': 'GA'})
+        self.transaction.refresh_from_db()
+        self.assertEqual(self.transaction.vendor_name, "Speedway")
+
 class PDFUploadInsertTest(TestCase):
     def test_pdfupload_post_saves_to_database(self):
         test_file = SimpleUploadedFile('statement.pdf', b'PDF', content_type='application/pdf')
         with patch("statement_reader.handle_uploads.parse"):
             response = self.client.post('/upload', {'file': test_file})
+        self.assertEqual(PDFUpload.objects.count(), 1)
+
+class PDFUploadDeleteTest(TestCase):
+    def setUp(self):
+        test_file = SimpleUploadedFile('statement.pdf', b'PDF', content_type='application/pdf')
+        test_file2 = SimpleUploadedFile('statement2.pdf', b'PDF2', content_type='application/pdf')
+        PDFUpload.objects.create(file = 'test_file')
+        PDFUpload.objects.create(file = 'test_file2')
+        self.assertEqual(PDFUpload.objects.count(), 2)
+        self.url = reverse("delete_pdf", kwargs={'pk': 1})
+
+    def test_pdfupload_delete_pdf_from_database(self):
+        response = self.client.get(self.url)
         self.assertEqual(PDFUpload.objects.count(), 1)
 
 class PDFUploadInsertFailTest(TestCase):
