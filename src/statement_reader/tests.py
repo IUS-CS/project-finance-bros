@@ -185,7 +185,7 @@ trailer
         self.assertEqual(Transaction.objects.get(id=1).vendor_name, "Speedway")
 
 class ParserFailTest(TestCase):
-    def test_transaction_fails_to_save_database_after_parsing_pdf_incorrect_expression(self):
+    def test_transaction_fails_to_save_to_database_after_parsing_pdf_with_incorrect_expression(self):
         test_file = SimpleUploadedFile('statement.pdf', b"""%PDF-2.0
 3 0 obj
 << /Type /Page /MediaBox [0 0 300 144] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
