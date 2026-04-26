@@ -161,3 +161,47 @@ class PDFUploadInsertFailTest(TestCase):
     def test_pdfupload_post_fails_with_no_document(self):
         response = self.client.post('/upload')
         self.assertEqual(PDFUpload.objects.count(), 0)
+
+class ParserTest(TestCase):
+    def test_transaction_saves_to_database_after_parsing_pdf(self):
+        test_file = SimpleUploadedFile('statement.pdf', b"""%PDF-2.0
+3 0 obj
+<< /Type /Page /MediaBox [0 0 300 144] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 44 >>
+stream
+/F1 12 Tf
+(04/28 Speedway $14.00) Tj
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Arial >>
+endobj
+trailer
+<< /Root 1 0 R >>
+%%EOF""", content_type='application/pdf')
+        response = self.client.post('/upload', {'file': test_file})
+        self.assertEqual(Transaction.objects.get(id=1).vendor_name, "Speedway")
+
+class ParserFailTest(TestCase):
+    def test_transaction_fails_to_save_database_after_parsing_pdf_incorrect_expression(self):
+        test_file = SimpleUploadedFile('statement.pdf', b"""%PDF-2.0
+3 0 obj
+<< /Type /Page /MediaBox [0 0 300 144] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 44 >>
+stream
+/F1 12 Tf
+(04 28 Speedway $14.00) Tj
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Arial >>
+endobj
+trailer
+<< /Root 1 0 R >>
+%%EOF""", content_type='application/pdf')
+        response = self.client.post('/upload', {'file': test_file})
+        self.assertEqual(Transaction.objects.count(), 0)
