@@ -2,3 +2,4 @@ asgiref==3.11.1
 Django==6.0.2
 sqlparse==0.5.5
 pdfplumber==0.11.9
+pytest-playwright
