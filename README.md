@@ -42,6 +42,19 @@ Clone the GitHub repository.
 git clone https://github.com/IUS-CS/project-finance-bros.git
 ```
 
+Install required dependencies.
+
+**Windows:**
+
+```bash
+pip install project-finance-bros\src\requirements.txt
+```
+**macOS & Linux:**
+
+```bash
+pip install project-finance-bros/src/requirements.txt
+```
+
 Run the server.
 
 **Windows:**
