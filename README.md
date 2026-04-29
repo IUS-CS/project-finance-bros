@@ -47,12 +47,12 @@ Install required dependencies.
 **Windows:**
 
 ```bash
-pip install project-finance-bros\src\requirements.txt
+pip install -r project-finance-bros\src\requirements.txt
 ```
 **macOS & Linux:**
 
 ```bash
-pip install project-finance-bros/src/requirements.txt
+pip install -r project-finance-bros/src/requirements.txt
 ```
 
 Run the server.
