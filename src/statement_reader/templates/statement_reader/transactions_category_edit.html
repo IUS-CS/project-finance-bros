@@ -1,25 +1,36 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 
+<header>
+    <a href="http://localhost:8000"><img src="{% static 'statement_reader/images/home_button.png' %}" alt="home">
+    </a>
+
+</header>
+
 <body>
+    <link rel="stylesheet" href="{% static 'statement_reader/css/style.css' %}">
     <div>
-        <a href="http://localhost:8000"><- Home</a>
         <h1 style="text-align: center;">Finance Tracker</h1>
     </div>
 
-    <form action="/save_categories" method="post">
+    <form action="/save_categories" method="post" class="transaction-form">
         {% csrf_token %}
         {{ formset.management_form }}
 
         {% for form in formset %}
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
+            <div class="form-group">
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
 
-            {{ form.as_p }}
+                {{ form.as_p }}
+            </div>
         {% endfor %}
+
         
-        <input type="submit" value="Submit"></input>
+        <button type="submit" class="submit-button" value="Submit"></button>
+        <br>
     </form>
 
 </body>
