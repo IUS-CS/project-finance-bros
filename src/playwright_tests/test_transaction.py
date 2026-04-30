@@ -58,7 +58,7 @@ def test_pdf_upload(playwright: Playwright) -> None:
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
-    file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "media/March 19.pdf"))
+    file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "test_media/March 19.pdf"))
     page.goto("http://127.0.0.1:8000/")
     page.get_by_role("button", name="Statement Reader").click()
     page.locator('input[name="file"]').set_input_files(file_path)
